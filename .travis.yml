@@ -1,6 +1,10 @@
 language: python
 python:
-  - "3.5"
+  - "3.7"
+dist:
+  - bionic
+services:
+  - docker
 
 cache:
   apt: true
@@ -11,6 +15,8 @@ cache:
   # How long we should wait for the cache to be fetched before giving up and
   # start without a cache
   timeout: 1000
+
+if: NOT branch =~ /^(cherry-pick-)?backport-\d+-on-/
 
 #addons:
 #  apt:
@@ -48,6 +54,7 @@ install:
 
 script:
   - make html
+  - make -f docker.mk doctest
 
 #after_success:
 #  - ./scripts/ci/deploy-docs.sh
